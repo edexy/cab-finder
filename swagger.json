@@ -63,7 +63,7 @@
             }
         },
 
-        "drivers/{_id}/locations": {
+        "/drivers/{_id}/locations": {
             "post": {
                 "tags": ["Locations"],
                 "summary": "Save a driver location",
