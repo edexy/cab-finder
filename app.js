@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/v1/driver', usersRouter);
+app.use('/api/v1/drivers', usersRouter);
 app.use('/api/v1/cars', carsRouter);
 
 
