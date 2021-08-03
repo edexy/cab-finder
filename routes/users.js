@@ -20,7 +20,7 @@ router.post('/register', userValidator, async(req, res, next) => {
 
 });
 
-router.post('/:_id/location/', async(req, res, next) => {
+router.post('/:_id/locations/', async(req, res, next) => {
     console.log(req.body)
     const { latitude, longitude } = req.body;
     let _id = req.params._id;
