@@ -1,0 +1,193 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Cabs Search System Application RESTFUL API",
+        "description": "Cabs Search System Application REST API is an api that exposes api endpoints that",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Pete",
+            "email": "edexpetex911@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "host": "cab-search-api.herokuapp.com",
+    "basePath": "/api/v1",
+    "tags": [{
+            "name": "Drivers",
+            "description": "API endpoint for users in the system"
+        },
+        {
+            "name": "Locations",
+            "description": "API endpoint for saving driver location"
+        },
+        {
+            "name": "Cabs",
+            "description": "API endpoint for getting available cars"
+        }
+    ],
+    "schemes": ["https", "http"],
+    "paths": {
+        "/drivers/register": {
+            "post": {
+                "tags": ["Drivers"],
+                "summary": "Register a new driver",
+                "description": "",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "driver",
+                    "in": "body",
+                    "summary": "",
+                    "description": "Details of the driver register",
+                    "operationId": "RegisterDriver",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/RegisterDriver"
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Register a new driver"
+                    },
+                    "409": {
+                        "description": "email already exists"
+                    },
+                    "422": {
+                        "description": "validation errors"
+                    }
+                }
+            }
+        },
+
+        "drivers/{_id}/locations": {
+            "post": {
+                "tags": ["Locations"],
+                "summary": "Save a driver location",
+                "description": "",
+                "oprationId": "CreateADriverLocation",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                        "name": "_id",
+                        "in": "path",
+                        "description": "driverId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "location",
+                        "in": "body",
+                        "summary": "",
+                        "description": "Details of the driver register",
+                        "operationId": "SaveDriverLocation",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SaveDriverLocation"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Drivers' location saved succcessfully"
+                    },
+                    "422": {
+                        "description": "validation errors"
+                    }
+                }
+            }
+        },
+
+        "/cars?latitude={latitude}&longitude={longitude}": {
+            "get": {
+                "tags": ["Cabs"],
+                "summary": "Get available cabs",
+                "description": "",
+                "oprationId": "GetAvailableCabs",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                        "name": "latitude",
+                        "in": "query",
+                        "description": "latitude of passenger's location",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "description": "longitude of passengers location",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Location Retrieved Successfully"
+                    },
+                    "422": {
+                        "description": "validation errors"
+                    }
+                }
+            }
+        }
+    },
+
+    "definitions": {
+        "RegisterDriver": {
+            "type": "object",
+            "required": [
+                "name",
+                "email",
+                "phone_number",
+                "license_number",
+                "car_number"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Joe Doe"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "joedoe@yahoo.com"
+                },
+                "phone_number": {
+                    "type": "string",
+                    "example": "8134765432"
+                },
+                "license_number": {
+                    "type": "string",
+                    "example": "ADC12819BC3"
+                },
+                "car_number": {
+                    "type": "string",
+                    "example": "AH-01-ZA-0838"
+                }
+            },
+            "xml": {
+                "name": "RegisterDriver"
+            }
+        },
+        "SaveDriverLocation": {
+            "type": "object",
+            "required": ["latitude", "longitude"],
+            "properties": {
+                "latitude": {
+                    "type": "string",
+                    "example": "12.9724"
+                },
+                "longitude": {
+                    "type": "string",
+                    "example": "77.580643"
+                }
+            },
+            "xml": {
+                "name": "SaveDriverLocation"
+            }
+        }
+    }
+}

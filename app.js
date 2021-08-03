@@ -1,27 +1,38 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+require('dotenv').config()
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const carsRouter = require('./routes/cars');
 
-var app = express();
+mongoose.connect(process.env.DB_URL || 'mongodb://localhost:27017/cab', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => console.log('DB connected'))
+    .catch(error => console.log(error));
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument)
+);
+
 app.use('/api/v1/driver', usersRouter);
-app.use('/api/v1/passenger', usersRouter);
+app.use('/api/v1/cars', carsRouter);
 
 
 // catch 404 and forward to error handler
@@ -37,7 +48,12 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.json({
+        data: null,
+        status: false,
+        message: err.message.message || err.message,
+        statusCode: err.status
+    });
 });
 
 module.exports = app;
