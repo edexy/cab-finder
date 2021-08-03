@@ -7,6 +7,14 @@
     "scripts": {
         "start": "node ./server"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/edexy/cab-finder.git"
+    },
+    "bugs": {
+        "url": "https://github.com/edexy/cab-finder.git/issues"
+    },
+    "homepage": "https://github.com/edexy/cab-finder.git#readme",
     "author": "Peter Edoja",
     "license": "ISC",
     "dependencies": {
