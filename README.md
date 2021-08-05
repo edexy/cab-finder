@@ -19,4 +19,4 @@ PROJECT START STEPS:
             - npm install
             - npm start
     
-    2. Go to [docs](https://cab-search-api.herokuapp.com/api-docs) in your browser to view it.
+    2. Go to [swagger](https://cab-search-api.herokuapp.com/api-docs) in your browser to view it.
